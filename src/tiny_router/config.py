@@ -34,7 +34,7 @@ class ModelTarget:
             raise ConfigurationError("model target must be a string or object")
         unknown = set(value) - {"model", "provider", "metadata"}
         if unknown:
-            raise ConfigurationError(f"unknown model target keys: {sorted(unknown)}")
+            raise ConfigurationError(f"unknown model target keys: {sorted(map(str, unknown))}")
         metadata = value.get("metadata", {})
         if not isinstance(metadata, dict):
             raise ConfigurationError("model target metadata must be an object")
@@ -74,7 +74,7 @@ class RouterConfig:
             raise ConfigurationError("configuration must be an object")
         unknown = set(payload) - {"models", "policy"}
         if unknown:
-            raise ConfigurationError(f"unknown configuration keys: {sorted(unknown)}")
+            raise ConfigurationError(f"unknown configuration keys: {sorted(map(str, unknown))}")
         raw_models = payload.get("models")
         if not isinstance(raw_models, dict):
             raise ConfigurationError("models must be an object")
@@ -91,7 +91,7 @@ class RouterConfig:
         policy_fields = {item.name for item in fields(RoutingPolicy)}
         policy_unknown = set(raw_policy) - policy_fields
         if policy_unknown:
-            raise ConfigurationError(f"unknown policy keys: {sorted(policy_unknown)}")
+            raise ConfigurationError(f"unknown policy keys: {sorted(map(str, policy_unknown))}")
         converted = dict(raw_policy)
         for name in ("uncertain_tier", "minimum_tier", "maximum_tier"):
             if name in converted:

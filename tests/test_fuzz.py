@@ -4,11 +4,14 @@ import math
 import random
 import string
 import unittest
+import json
 
 from tiny_router.features import extract_features
 from tiny_router.model import RouterModel
 from tiny_router.policy import RoutingPolicy
 from tiny_router.types import Tier
+from tiny_router.config import RouterConfig
+from tiny_router.errors import ArtifactError, ConfigurationError
 
 
 def random_text(rng: random.Random) -> str:
@@ -16,7 +19,47 @@ def random_text(rng: random.Random) -> str:
     return "".join(rng.choice(alphabet) for _ in range(rng.randrange(0, 4000)))
 
 
+def random_json_value(rng: random.Random, depth: int = 0):
+    scalars = [None, True, False, rng.randint(-1000, 1000), rng.random(), random_text(rng)[:20]]
+    if depth >= 3:
+        return rng.choice(scalars)
+    choice = rng.randrange(3)
+    if choice == 0:
+        return rng.choice(scalars)
+    if choice == 1:
+        return [random_json_value(rng, depth + 1) for _ in range(rng.randrange(5))]
+    return {f"key-{index}": random_json_value(rng, depth + 1) for index in range(rng.randrange(5))}
+
+
 class FuzzTests(unittest.TestCase):
+    def test_random_json_artifacts_fail_with_artifact_errors_only(self) -> None:
+        rng = random.Random(712)
+        for _ in range(2000):
+            payload = json.loads(json.dumps(random_json_value(rng)))
+            try:
+                model = RouterModel.from_dict(payload)
+                self.assertEqual(len(model.weights), 3)
+            except ArtifactError:
+                pass
+
+    def test_random_json_configs_fail_with_configuration_errors_only(self) -> None:
+        rng = random.Random(713)
+        for _ in range(2000):
+            payload = json.loads(json.dumps(random_json_value(rng)))
+            try:
+                config = RouterConfig.from_dict(payload)
+                self.assertEqual(set(config.models), set(Tier))
+            except ConfigurationError:
+                pass
+
+    def test_hostile_policy_types_fail_with_value_errors(self) -> None:
+        invalid = (None, "1", True, float("nan"), float("inf"), [], {})
+        for value in invalid:
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    RoutingPolicy(underroute_penalty=value)  # type: ignore[arg-type]
+                with self.assertRaises(ValueError):
+                    RoutingPolicy().expected_costs((value, 0.0, 1.0))  # type: ignore[arg-type]
     def test_random_prompts_never_break_probability_or_decision_invariants(self) -> None:
         rng = random.Random(20260620)
         model = RouterModel.empty(257)

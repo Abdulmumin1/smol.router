@@ -18,21 +18,58 @@ class RoutingPolicy:
     high_probability_threshold: float = 0.70
 
     def __post_init__(self) -> None:
-        if len(self.tier_costs) != 3 or any(cost < 0 or not math.isfinite(cost) for cost in self.tier_costs):
+        if (
+            not isinstance(self.tier_costs, tuple)
+            or len(self.tier_costs) != 3
+            or any(
+                not isinstance(cost, (int, float))
+                or isinstance(cost, bool)
+                or cost < 0
+                or not math.isfinite(cost)
+                for cost in self.tier_costs
+            )
+        ):
             raise ValueError("tier costs must be three finite non-negative numbers")
         if tuple(sorted(self.tier_costs)) != self.tier_costs:
             raise ValueError("tier costs must be non-decreasing")
-        if self.underroute_penalty < 0 or not math.isfinite(self.underroute_penalty):
+        if (
+            not isinstance(self.underroute_penalty, (int, float))
+            or isinstance(self.underroute_penalty, bool)
+            or self.underroute_penalty < 0
+            or not math.isfinite(self.underroute_penalty)
+        ):
             raise ValueError("underroute penalty must be finite and non-negative")
-        if not 0 <= self.confidence_threshold <= 1:
+        if (
+            not isinstance(self.confidence_threshold, (int, float))
+            or isinstance(self.confidence_threshold, bool)
+            or not math.isfinite(self.confidence_threshold)
+            or not 0 <= self.confidence_threshold <= 1
+        ):
             raise ValueError("confidence threshold must be in [0, 1]")
+        if any(not isinstance(tier, Tier) for tier in (self.uncertain_tier, self.minimum_tier, self.maximum_tier)):
+            raise ValueError("policy tiers must be Tier values")
         if self.minimum_tier > self.maximum_tier:
             raise ValueError("minimum_tier cannot exceed maximum_tier")
-        if not 0 <= self.high_probability_threshold <= 1:
+        if (
+            not isinstance(self.high_probability_threshold, (int, float))
+            or isinstance(self.high_probability_threshold, bool)
+            or not math.isfinite(self.high_probability_threshold)
+            or not 0 <= self.high_probability_threshold <= 1
+        ):
             raise ValueError("high_probability_threshold must be in [0, 1]")
 
     def expected_costs(self, probabilities: tuple[float, float, float]) -> tuple[float, float, float]:
-        if len(probabilities) != 3 or any(value < 0 or not math.isfinite(value) for value in probabilities):
+        if (
+            not isinstance(probabilities, tuple)
+            or len(probabilities) != 3
+            or any(
+                not isinstance(value, (int, float))
+                or isinstance(value, bool)
+                or value < 0
+                or not math.isfinite(value)
+                for value in probabilities
+            )
+        ):
             raise ValueError("probabilities must be three finite non-negative numbers")
         total = sum(probabilities)
         if not math.isclose(total, 1.0, abs_tol=1e-6):
