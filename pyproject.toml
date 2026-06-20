@@ -11,6 +11,14 @@ requires-python = ">=3.10"
 license = "MIT"
 authors = [{ name = "Tiny Router contributors" }]
 dependencies = []
+keywords = ["llm", "router", "machine-learning", "inference", "cost-optimization"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Typing :: Typed",
+]
 
 [project.optional-dependencies]
 test = ["pytest>=8", "hypothesis>=6"]
@@ -21,3 +29,5 @@ tiny-router = "tiny_router.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+tiny_router = ["py.typed"]

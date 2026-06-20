@@ -1,4 +1,4 @@
-.PHONY: test train demo
+.PHONY: test train demo example
 
 test:
 	PYTHONPATH=src python3 -m unittest discover -s tests -v
@@ -9,3 +9,5 @@ train:
 demo: train
 	PYTHONPATH=src python3 -m tiny_router route --model model.json "Prove this concurrent queue is linearizable"
 
+example:
+	PYTHONPATH=src python3 examples/benchmark_pipeline.py

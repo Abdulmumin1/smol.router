@@ -1,0 +1,26 @@
+{
+  "models": {
+    "low": {
+      "provider": "your-client",
+      "model": "small-model"
+    },
+    "medium": {
+      "provider": "your-client",
+      "model": "standard-model"
+    },
+    "high": {
+      "provider": "your-client",
+      "model": "frontier-model"
+    }
+  },
+  "policy": {
+    "tier_costs": [1.0, 5.0, 20.0],
+    "underroute_penalty": 30.0,
+    "confidence_threshold": 0.45,
+    "uncertain_tier": "medium",
+    "minimum_tier": "low",
+    "maximum_tier": "high",
+    "high_probability_threshold": 0.7
+  }
+}
+
