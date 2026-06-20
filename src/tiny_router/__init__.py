@@ -14,9 +14,12 @@ from .errors import (
 )
 from .config import ModelTarget, RouterConfig
 from .sdk import ExecutionAttempt, ExecutionResult, Router, RoutingResult
+from .benchmark import BenchmarkRecord, BenchmarkTask, run_benchmark, run_benchmark_async, write_benchmark_jsonl
 
 __all__ = [
     "ArtifactError",
+    "BenchmarkRecord",
+    "BenchmarkTask",
     "ConfigurationError",
     "DatasetError",
     "ExhaustedError",
@@ -33,5 +36,8 @@ __all__ = [
     "RoutingPolicy",
     "RoutingResult",
     "Tier",
+    "run_benchmark",
+    "run_benchmark_async",
+    "write_benchmark_jsonl",
 ]
 __version__ = "0.1.0"
