@@ -42,6 +42,7 @@ def build_parser() -> argparse.ArgumentParser:
     train.add_argument("--validation-fraction", type=float, default=0.2)
     train.add_argument("--acceptable-score", type=float, default=0.8)
     train.add_argument("--seed", type=int, default=17)
+    train.add_argument("--no-calibrate", action="store_true", help="skip held-out temperature calibration")
     _add_policy_arguments(train)
 
     route = subparsers.add_parser("route", help="route a prompt")
@@ -113,8 +114,14 @@ def main(argv: list[str] | None = None) -> int:
             learning_rate=args.learning_rate,
             seed=args.seed,
         )
+        if validation and not args.no_calibrate:
+            model.calibrate(validation)
         model.save(args.output)
-        result: dict[str, object] = {"model": str(Path(args.output)), "training_examples": len(training)}
+        result: dict[str, object] = {
+            "model": str(Path(args.output)),
+            "training_examples": len(training),
+            "temperature": model.temperature,
+        }
         if validation:
             result["validation"] = evaluate(model, validation, policy).to_dict()
         print(json.dumps(result, indent=2))

@@ -40,13 +40,16 @@ class RouterModel:
         return cls(dimensions, [[0.0] * dimensions for _ in Tier])
 
     def predict_proba(self, prompt: str) -> tuple[float, float, float]:
-        features = extract_features(prompt, self.dimensions)
+        logits = self.predict_logits(prompt)
         temperature = max(self.temperature, 1e-3)
-        logits = [
-            sum(row[index] * value for index, value in features.items()) / temperature
+        return _softmax([value / temperature for value in logits])
+
+    def predict_logits(self, prompt: str) -> tuple[float, float, float]:
+        features = extract_features(prompt, self.dimensions)
+        return tuple(
+            sum(row[index] * value for index, value in features.items())
             for row in self.weights
-        ]
-        return _softmax(logits)
+        )  # type: ignore[return-value]
 
     def predict(self, prompt: str) -> Tier:
         probabilities = self.predict_proba(prompt)
@@ -86,6 +89,24 @@ class RouterModel:
                     for feature_index, value in features.items():
                         row[feature_index] -= rate * (error * value + l2 * row[feature_index])
         return model
+
+    def calibrate(self, examples: Sequence[Example]) -> float:
+        """Fit scalar temperature by minimizing weighted held-out log loss."""
+        if not examples:
+            raise ValueError("calibration examples cannot be empty")
+        logits = [self.predict_logits(example.prompt) for example in examples]
+
+        def loss(temperature: float) -> float:
+            total_weight = sum(example.weight for example in examples)
+            return sum(
+                -example.weight
+                * math.log(max(_softmax([value / temperature for value in row])[int(example.label)], 1e-15))
+                for row, example in zip(logits, examples)
+            ) / total_weight
+
+        candidates = [math.exp(-3.0 + index * 0.05) for index in range(121)]
+        self.temperature = min(candidates, key=loss)
+        return self.temperature
 
     def to_dict(self) -> dict[str, object]:
         core: dict[str, object] = {

@@ -70,6 +70,15 @@ class ModelTests(unittest.TestCase):
         self.assertTrue(all(math.isfinite(value) and 0 <= value <= 1 for value in probabilities))
         self.assertAlmostEqual(sum(probabilities), 1.0)
 
+    def test_calibration_never_worsens_validation_log_loss(self) -> None:
+        def log_loss() -> float:
+            return sum(-math.log(self.model.predict_proba(item.prompt)[int(item.label)]) for item in self.examples)
+
+        before = log_loss()
+        temperature = self.model.calibrate(self.examples)
+        self.assertGreater(temperature, 0)
+        self.assertLessEqual(log_loss(), before + 1e-12)
+
     def test_round_trip_preserves_predictions(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "model.json"
