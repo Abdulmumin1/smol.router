@@ -1,7 +1,11 @@
-.PHONY: test train demo example
+.PHONY: test check train demo example
 
 test:
 	PYTHONPATH=src python3 -m unittest discover -s tests -v
+
+check: test
+	PYTHONPATH=src python3 -m compileall -q src tests examples
+	git diff --check
 
 train:
 	PYTHONPATH=src python3 -m tiny_router train data/seed.jsonl --output model.json

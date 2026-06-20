@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install package and test tools
+        run: python -m pip install --upgrade pip && python -m pip install -e '.[test]'
+      - name: Compile package
+        run: python -m compileall -q src tests examples
+      - name: Run tests and fuzz properties
+        run: python -m pytest -q
+      - name: Smoke test installed CLI
+        run: tiny-router --version && tiny-router init --output /tmp/router.json
+      - name: Check whitespace errors
+        run: git diff --check
+
