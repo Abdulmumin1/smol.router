@@ -84,5 +84,25 @@ class SdkTests(unittest.TestCase):
         self.assertEqual(len(raised.exception.attempts), 3)
 
 
+class AsyncSdkTests(unittest.IsolatedAsyncioTestCase):
+    async def test_async_execute_supports_async_validator_and_escalation(self) -> None:
+        async def invoke(target, prompt):
+            return target.model
+
+        async def validate(output):
+            return output == "test/regular"
+
+        result = await make_router().execute_async("solve this", invoke, validate=validate)
+        self.assertTrue(result.escalated)
+        self.assertEqual(result.output, "test/regular")
+
+    async def test_async_execute_requires_boolean_verdict(self) -> None:
+        async def invoke(target, prompt):
+            return "answer"
+
+        with self.assertRaisesRegex(TypeError, "bool"):
+            await make_router().execute_async("solve this", invoke, validate=lambda output: "yes")  # type: ignore[arg-type]
+
+
 if __name__ == "__main__":
     unittest.main()

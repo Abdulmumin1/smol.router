@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Any, Callable, Generic, Iterable, TypeVar
+import inspect
+from typing import Any, Awaitable, Callable, Generic, Iterable, TypeVar
 
 from .config import ModelTarget, RouterConfig
 from .errors import ExhaustedError, InvalidPromptError, ProviderError
@@ -129,11 +130,49 @@ class Router:
                     raise
                 continue
             accepted = validate(output) if validate is not None else True
+            if not isinstance(accepted, bool):
+                raise TypeError("validate must return bool")
             attempts.append(ExecutionAttempt(tier, target, accepted))
             if accepted:
                 decision = replace(initial.decision, tier=tier, reason=(
                     initial.decision.reason if tier == initial.tier else "response_validation_escalation"
                 ))
+                return ExecutionResult(output, RoutingResult(decision, target), tuple(attempts))
+        raise ExhaustedError("no model tier produced an acceptable response", attempts=tuple(attempts))
+
+    async def execute_async(
+        self,
+        prompt: str,
+        invoke: Callable[[ModelTarget, str], Awaitable[T]],
+        *,
+        validate: Callable[[T], bool | Awaitable[bool]] | None = None,
+        maximum_tier: Tier | str | int | None = None,
+    ) -> ExecutionResult[T]:
+        """Async provider execution with the same validation and escalation semantics."""
+        initial = self.route(prompt, maximum_tier=maximum_tier)
+        ceiling = Tier.parse(maximum_tier) if maximum_tier is not None else self.config.policy.maximum_tier
+        attempts: list[ExecutionAttempt] = []
+        for tier_value in range(int(initial.tier), int(ceiling) + 1):
+            tier = Tier(tier_value)
+            target = self.config.target_for(tier)
+            try:
+                output = await invoke(target, prompt)
+            except ProviderError as exc:
+                attempts.append(ExecutionAttempt(tier, target, False, str(exc)))
+                if not exc.retryable:
+                    raise
+                continue
+            verdict = validate(output) if validate is not None else True
+            accepted = await verdict if inspect.isawaitable(verdict) else verdict
+            if not isinstance(accepted, bool):
+                raise TypeError("validate must return bool or awaitable[bool]")
+            attempts.append(ExecutionAttempt(tier, target, accepted))
+            if accepted:
+                decision = replace(
+                    initial.decision,
+                    tier=tier,
+                    reason=initial.decision.reason if tier == initial.tier else "response_validation_escalation",
+                )
                 return ExecutionResult(output, RoutingResult(decision, target), tuple(attempts))
         raise ExhaustedError("no model tier produced an acceptable response", attempts=tuple(attempts))
 
