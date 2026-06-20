@@ -52,6 +52,7 @@ class ServerTests(unittest.TestCase):
             self.request("/route", {"prompt": 42})
         self.assertEqual(raised.exception.code, 400)
         payload = json.load(raised.exception)
+        raised.exception.close()
         self.assertEqual(payload["error"]["code"], "invalid_request")
 
 

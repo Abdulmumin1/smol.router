@@ -13,6 +13,8 @@ from .types import Tier
 from .config import ModelTarget, RouterConfig
 from .sdk import Router
 from .server import create_server
+from .errors import RouterError
+from . import __version__
 
 
 def _policy(args: argparse.Namespace) -> RoutingPolicy:
@@ -33,6 +35,7 @@ def _add_policy_arguments(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="tiny-router", description="Train and run a tiny capability router")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     train = subparsers.add_parser("train", help="train from a JSONL dataset")
@@ -49,6 +52,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     route = subparsers.add_parser("route", help="route a prompt")
     route.add_argument("--model", default="model.json")
+    route.add_argument("--config", help="JSON model registry and policy")
+    route.add_argument("--minimum-tier", choices=("low", "medium", "high"))
+    route.add_argument("--maximum-tier", choices=("low", "medium", "high"))
     route.add_argument("prompt", nargs="?")
     _add_policy_arguments(route)
 
@@ -60,15 +66,21 @@ def build_parser() -> argparse.ArgumentParser:
 
     serve = subparsers.add_parser("serve", help="serve POST /route")
     serve.add_argument("--model", default="model.json")
+    serve.add_argument("--config", help="JSON model registry and policy")
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8080)
     _add_policy_arguments(serve)
+
+    init = subparsers.add_parser("init", help="write a documented starter configuration")
+    init.add_argument("--output", default="router.json")
+    init.add_argument("--force", action="store_true")
+
+    inspect = subparsers.add_parser("inspect", help="inspect a model artifact")
+    inspect.add_argument("--model", default="model.json")
     return parser
 
 
-def _serve(model: RouterModel, policy: RoutingPolicy, host: str, port: int) -> None:
-    targets = {tier: ModelTarget(tier.label) for tier in Tier}
-    router = Router(model, RouterConfig(targets, policy))
+def _serve(router: Router, host: str, port: int) -> None:
     print(f"listening on http://{host}:{port}", file=sys.stderr)
     server = create_server(router, host, port)
     try:
@@ -79,10 +91,20 @@ def _serve(model: RouterModel, policy: RoutingPolicy, host: str, port: int) -> N
         server.server_close()
 
 
-def main(argv: list[str] | None = None) -> int:
+def _default_config(policy: RoutingPolicy) -> RouterConfig:
+    return RouterConfig({tier: ModelTarget(tier.label) for tier in Tier}, policy)
+
+
+def _configured_router(args: argparse.Namespace) -> Router:
+    model = RouterModel.load(args.model)
+    config = RouterConfig.load(args.config) if args.config else _default_config(_policy(args))
+    return Router(model, config)
+
+
+def _main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    policy = _policy(args)
     if args.command == "train":
+        policy = _policy(args)
         examples = load_jsonl(args.dataset, args.acceptable_score)
         training, validation = split_examples(examples, args.validation_fraction, args.seed)
         model = RouterModel.train(
@@ -105,13 +127,42 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2))
     elif args.command == "route":
         prompt = args.prompt if args.prompt is not None else sys.stdin.read()
-        print(json.dumps(policy.route(RouterModel.load(args.model), prompt).to_dict(), indent=2))
+        router = _configured_router(args)
+        result = router.route(prompt, minimum_tier=args.minimum_tier, maximum_tier=args.maximum_tier)
+        print(json.dumps(result.to_dict(), indent=2))
     elif args.command == "evaluate":
+        policy = _policy(args)
         metrics = evaluate(RouterModel.load(args.model), load_jsonl(args.dataset, args.acceptable_score), policy)
         print(json.dumps(metrics.to_dict(), indent=2))
     elif args.command == "serve":
-        _serve(RouterModel.load(args.model), policy, args.host, args.port)
+        _serve(_configured_router(args), args.host, args.port)
+    elif args.command == "init":
+        destination = Path(args.output)
+        if destination.exists() and not args.force:
+            raise RouterError(f"{destination} already exists; pass --force to replace it")
+        template = RouterConfig.from_dict(
+            {"models": {"low": "provider/tiny", "medium": "provider/standard", "high": "provider/frontier"}}
+        )
+        destination.write_text(json.dumps(template.to_dict(), indent=2) + "\n", encoding="utf-8")
+        print(f"wrote {destination}")
+    elif args.command == "inspect":
+        model = RouterModel.load(args.model)
+        payload = model.to_dict()
+        print(json.dumps({
+            "format": payload["format"],
+            "dimensions": model.dimensions,
+            "temperature": model.temperature,
+            "sha256": payload["sha256"],
+        }, indent=2))
     return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    try:
+        return _main(argv)
+    except (RouterError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
