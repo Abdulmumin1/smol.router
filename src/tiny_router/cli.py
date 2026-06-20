@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from .data import load_jsonl, split_examples
@@ -11,6 +10,9 @@ from .evaluate import evaluate
 from .model import RouterModel
 from .policy import RoutingPolicy
 from .types import Tier
+from .config import ModelTarget, RouterConfig
+from .sdk import Router
+from .server import create_server
 
 
 def _policy(args: argparse.Namespace) -> RoutingPolicy:
@@ -65,34 +67,10 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _serve(model: RouterModel, policy: RoutingPolicy, host: str, port: int) -> None:
-    class Handler(BaseHTTPRequestHandler):
-        def do_POST(self) -> None:  # noqa: N802
-            if self.path != "/route":
-                self.send_error(404)
-                return
-            try:
-                length = int(self.headers.get("Content-Length", "0"))
-                if length > 1_000_000:
-                    raise ValueError("request body too large")
-                payload = json.loads(self.rfile.read(length))
-                prompt = payload.get("prompt") if isinstance(payload, dict) else None
-                if not isinstance(prompt, str):
-                    raise ValueError("prompt must be a string")
-                body = json.dumps(policy.route(model, prompt).to_dict()).encode()
-                self.send_response(200)
-            except (ValueError, TypeError, json.JSONDecodeError) as exc:
-                body = json.dumps({"error": str(exc)}).encode()
-                self.send_response(400)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-
-        def log_message(self, format: str, *args: object) -> None:
-            print(format % args, file=sys.stderr)
-
+    targets = {tier: ModelTarget(tier.label) for tier in Tier}
+    router = Router(model, RouterConfig(targets, policy))
     print(f"listening on http://{host}:{port}", file=sys.stderr)
-    server = ThreadingHTTPServer((host, port), Handler)
+    server = create_server(router, host, port)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
