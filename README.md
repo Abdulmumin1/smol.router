@@ -2,6 +2,8 @@
 
 A dependency-free Python classifier and SDK that routes a prompt to the cheapest model tier likely to answer it correctly.
 
+**[Documentation](https://router.ai-query.dev)** · **[Quickstart](https://router.ai-query.dev/quickstart/)** · **[Python SDK](https://router.ai-query.dev/sdk/)**
+
 ```text
 prompt -> calibrated classifier -> cost/risk policy -> model target
                                              |
