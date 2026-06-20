@@ -14,6 +14,10 @@ class ConfigurationError(RouterError, ValueError):
     """Router configuration is invalid."""
 
 
+class InvalidPromptError(RouterError, ValueError):
+    """A prompt cannot be routed because it violates the SDK contract."""
+
+
 class ProviderError(RouterError):
     """A downstream model invocation failed."""
 
@@ -24,4 +28,3 @@ class ProviderError(RouterError):
 
 class ExhaustedError(ProviderError):
     """Every permitted model tier failed or produced an unacceptable answer."""
-
