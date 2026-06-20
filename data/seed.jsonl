@@ -43,4 +43,283 @@
 {"prompt":"Perform root-cause analysis across these kernel, network, and application traces.","label":"high"}
 {"prompt":"Design a safe capability system for untrusted plugins and state the security invariants.","label":"high"}
 {"prompt":"Prove or disprove that this randomized algorithm meets its claimed probability bound.","label":"high"}
-
+{"prompt":"Capital of France?","label":"low"}
+{"prompt":"Convert 'HELLO WORLD' to lowercase.","label":"low"}
+{"prompt":"Is 101 a prime number?","label":"low"}
+{"prompt":"Translate 'Thank you very much' to German.","label":"low"}
+{"prompt":"Correct this spelling: 'definately'.","label":"low"}
+{"prompt":"Extract the phone number from: Call us at 555-0199.","label":"low"}
+{"prompt":"What is 7 times 8?","label":"low"}
+{"prompt":"List five fruits that are red.","label":"low"}
+{"prompt":"Does 'radar' spelled backwards change its meaning?","label":"low"}
+{"prompt":"Classify as positive or negative: 'This food tastes awful.'","label":"low"}
+{"prompt":"Rewrite in active voice: 'The ball was thrown by John.'","label":"low"}
+{"prompt":"What color do you get when you mix blue and yellow?","label":"low"}
+{"prompt":"Remove the first and last letters of: 'banana'.","label":"low"}
+{"prompt":"Sort this list alphabetically: banana, apple, cherry.","label":"low"}
+{"prompt":"Convert '120' from minutes to hours.","label":"low"}
+{"prompt":"Is an eagle a mammal, bird, or reptile?","label":"low"}
+{"prompt":"Format this text as a single line: 'Hello\\nWorld\\nFrom\\nMe'.","label":"low"}
+{"prompt":"Identify the country associated with the flag of Japan.","label":"low"}
+{"prompt":"Add an exclamation mark to the end of: 'Have a nice day'.","label":"low"}
+{"prompt":"What is the antonym of 'hot'?","label":"low"}
+{"prompt":"Is 12 greater than 15?","label":"low"}
+{"prompt":"Find the word count of: 'The quick brown fox jumps over the lazy dog.'","label":"low"}
+{"prompt":"Extract the zip code from: '1600 Amphitheatre Pkwy, Mountain View, CA 94043'.","label":"low"}
+{"prompt":"Make this text all uppercase: 'simple example'.","label":"low"}
+{"prompt":"What is the third letter of the alphabet?","label":"low"}
+{"prompt":"Repeat the word 'hello' three times separated by a comma.","label":"low"}
+{"prompt":"Which is larger: a megabyte or a gigabyte?","label":"low"}
+{"prompt":"Replace 'cat' with 'dog' in: 'The cat sat on the mat.'","label":"low"}
+{"prompt":"Is the sun a star or a planet?","label":"low"}
+{"prompt":"Truncate this sentence to 5 words: 'The elegant architecture of the old cathedral was breathtaking.'","label":"low"}
+{"prompt":"Is ice solid, liquid, or gas?","label":"low"}
+{"prompt":"What is 100 minus 37?","label":"low"}
+{"prompt":"Say goodbye in Japanese.","label":"low"}
+{"prompt":"What is the domain name in: 'https://github.com/features'?","label":"low"}
+{"prompt":"Give me the abbreviation for 'United Nations'.","label":"low"}
+{"prompt":"Is the letter 'e' a vowel or a consonant?","label":"low"}
+{"prompt":"Format these names in uppercase: john, paul, george.","label":"low"}
+{"prompt":"What is the plural form of 'child'?","label":"low"}
+{"prompt":"Is a triangle a 2D or 3D shape?","label":"low"}
+{"prompt":"Extract the currency symbol from: '$45.99'.","label":"low"}
+{"prompt":"What is the square of 9?","label":"low"}
+{"prompt":"Identify the verb in: 'She ran quickly to the store.'","label":"low"}
+{"prompt":"Convert this date to YYYY-MM-DD: 'October 12, 2024'.","label":"low"}
+{"prompt":"Does the word 'level' contain the letter 'x'?","label":"low"}
+{"prompt":"Select the larger number: 45 or 54.","label":"low"}
+{"prompt":"What is the opposite of 'always'?","label":"low"}
+{"prompt":"Convert 5 miles to kilometers roughly.","label":"low"}
+{"prompt":"Is 0 an even or odd number?","label":"low"}
+{"prompt":"Capitalize the first letter of: 'welcome to the team'.","label":"low"}
+{"prompt":"List three state capitals of any US states.","label":"low"}
+{"prompt":"Write a Python script that reads a CSV file and prints the average of the 'Price' column.","label":"medium"}
+{"prompt":"Explain the differences between SQL inner join and left join with examples.","label":"medium"}
+{"prompt":"Design an API endpoint structure for a simple blogging platform, including routes for posts, comments, and users.","label":"medium"}
+{"prompt":"Compare the performance and memory characteristics of ArrayList vs LinkedList in Java.","label":"medium"}
+{"prompt":"Write a TypeScript interface for a User object that contains optional addresses and contact details.","label":"medium"}
+{"prompt":"Summarize the key events of the French Revolution in three bullet points.","label":"medium"}
+{"prompt":"Write a CSS grid layout that displays a 3-column card grid on desktop and collapses to 1 column on mobile.","label":"medium"}
+{"prompt":"Explain how HTTPS works to secure communication between a client and a server.","label":"medium"}
+{"prompt":"Draft a polite email to a client explaining that their project delivery will be delayed by three days.","label":"medium"}
+{"prompt":"Write a recursive JavaScript function to calculate the factorial of a given positive integer.","label":"medium"}
+{"prompt":"Analyze this code for a memory leak and explain how to fix it: ```js\nconst handlers = []; function addHandler(el) { el.addEventListener('click', () => { console.log(el.id); }); handlers.push(el); }\n```","label":"medium"}
+{"prompt":"Create a SQL query to find the second highest salary from an Employee table.","label":"medium"}
+{"prompt":"Write a short blog post intro (150 words) about the benefits of adopting TypeScript in frontend development.","label":"medium"}
+{"prompt":"Explain the difference between authentication and authorization with real-world analogies.","label":"medium"}
+{"prompt":"Implement a debounce function in JavaScript and explain why it is useful for search input events.","label":"medium"}
+{"prompt":"Design a database schema for a simple library management system including books, members, and loans.","label":"medium"}
+{"prompt":"What is the difference between synchronous and asynchronous execution in Python? Give a code example using asyncio.","label":"medium"}
+{"prompt":"Write unit tests using PyTest for a function that calculates compound interest.","label":"medium"}
+{"prompt":"Explain how Git's merge and rebase differ, and when you would prefer one over the other.","label":"medium"}
+{"prompt":"Rewrite this complex nested if-else block using guard clauses in Go: ```go\nfunc process(u *User) error { if u != nil { if u.Active { if u.Verified { return nil } else { return ErrNotVerified } } else { return ErrNotActive } } return ErrNilUser }\n```","label":"medium"}
+{"prompt":"What are the core principles of RESTful API design? Outline at least four.","label":"medium"}
+{"prompt":"Write a Python function to check if a string is a palindrome, ignoring casing, spaces, and punctuation.","label":"medium"}
+{"prompt":"Explain the concept of 'Event Loop' in Node.js and how it handles non-blocking I/O operations.","label":"medium"}
+{"prompt":"Design a responsive navigation bar using HTML and CSS Flexbox.","label":"medium"}
+{"prompt":"How does the virtual DOM improve React performance compared to direct DOM manipulation?","label":"medium"}
+{"prompt":"Write a Bash script that searches a log directory for the term 'FATAL' and moves matching files to /tmp.","label":"medium"}
+{"prompt":"Compare Docker and virtual machines in terms of resource utilization and startup time.","label":"medium"}
+{"prompt":"Write a SQL query that groups sales by month and calculates total revenue and average item price.","label":"medium"}
+{"prompt":"Explain how local storage, session storage, and cookies differ in web browsers.","label":"medium"}
+{"prompt":"Refactor this long and hard-to-read React component by splitting it into smaller, presentation-only components.","label":"medium"}
+{"prompt":"What is a deadlock in database systems, and what are the typical ways to prevent or resolve it?","label":"medium"}
+{"prompt":"Write a Python function that parses a raw markdown string and converts all list items (`* item`) into HTML `<li>` elements.","label":"medium"}
+{"prompt":"Explain the purpose of the 'useEffect' dependency array in React and what happens if it is omitted.","label":"medium"}
+{"prompt":"Draft a pull request description for a feature that adds OAuth2 authentication using GitHub.","label":"medium"}
+{"prompt":"Create a simple Dockerfile for a Node.js Express application that uses multi-stage builds.","label":"medium"}
+{"prompt":"Explain the difference between TCP and UDP, and give use cases where UDP is preferred.","label":"medium"}
+{"prompt":"Write a clean JavaScript class that implements a Pub/Sub event emitter with 'on', 'off', and 'emit' methods.","label":"medium"}
+{"prompt":"How does indexing speed up select queries in PostgreSQL? What are the potential trade-offs of having too many indexes?","label":"medium"}
+{"prompt":"Write a Python script to scrape the titles of the top stories from a generic news homepage using BeautifulSoup.","label":"medium"}
+{"prompt":"What is the CORS policy in web browsers, and how do you configure headers on the backend to resolve CORS errors?","label":"medium"}
+{"prompt":"Design a simple rate limiter middleware in Express.js that limits requests to 100 per hour per IP address.","label":"medium"}
+{"prompt":"Write a regular expression in Python that extracts all valid IPv4 addresses from a text file.","label":"medium"}
+{"prompt":"Compare the active-active and active-passive high availability strategies for database clustering.","label":"medium"}
+{"prompt":"Explain how garbage collection works in modern runtimes (like V8 or JVM) at a high level.","label":"medium"}
+{"prompt":"Implement a basic binary search tree insert and search method in TypeScript.","label":"medium"}
+{"prompt":"What is the difference between deep copying and shallow copying an object in JavaScript? Show how to perform a deep copy.","label":"medium"}
+{"prompt":"Explain the concept of 'lazy loading' in web performance and how to apply it to images and routes.","label":"medium"}
+{"prompt":"Write a Go function that fetches three different URLs concurrently and returns the first successful response.","label":"medium"}
+{"prompt":"Design a simple pagination scheme for an API returning products, explaining limit and offset offsets versus cursor-based pagination.","label":"medium"}
+{"prompt":"Write a Python script to merge two sorted lists into a single sorted list.","label":"medium"}
+{"prompt":"Prove that the Halting Problem is undecidable over Turing machines using a formal diagonalization argument.","label":"high"}
+{"prompt":"Design a highly available, multi-primary distributed database system. Explain how conflict-free replicated data types (CRDTs) can be utilized to resolve concurrent updates without locking, and detail the state-based vs operation-based synchronization trade-offs.","label":"high"}
+{"prompt":"Audit this assembly implementation of a constant-time modular multiplication routine for side-channel leakage, particularly timing attacks and cache-line analysis: ```assembly\nmov eax, [edi]\nmul esi\nadd eax, ecx\nadc edx, 0\n```","label":"high"}
+{"prompt":"Solve the heat equation on a rod of length $L$ with homogeneous Dirichlet boundary conditions and initial temperature distribution $u(x,0) = \\sin(3\\pi x / L)$ using separation of variables.","label":"high"}
+{"prompt":"Analyze the consistency properties of the Raft consensus algorithm during a network partition where the leader is isolated in a minority partition. Describe the detailed log replication flow and term number progression once the partition heals.","label":"high"}
+{"prompt":"Derive the mathematical formulation of the Adam optimizer from first principles, explaining the bias-correction steps for both the first and second moment estimates.","label":"high"}
+{"prompt":"Analyze a kernel-level deadlock trace involving spinlocks. The trace shows a CPU holding spinlock A and trying to acquire spinlock B, while another CPU holds spinlock B and tries to acquire spinlock A. Suggest a locking hierarchy or a lockless mitigation strategy.","label":"high"}
+{"prompt":"Prove that the class NP is closed under the operations of union, concatenation, and Kleene star.","label":"high"}
+{"prompt":"Optimize this compiler IR pass written in C++ that performs loop-invariant code motion (LICM). Explain how to maintain dominance frontier and alias analysis correctness during code motion across nested loop boundaries.","label":"high"}
+{"prompt":"Describe the mathematical construction of a Zero-Knowledge Succinct Non-Interactive Argument of Knowledge (zk-SNARK), specifically explaining the roles of bilinear pairings, QAP (Quadratic Arithmetic Programs), and toxic waste generation.","label":"high"}
+{"prompt":"Design a multi-tenant capability-based security model for a sandboxed WASM execution environment. The host must safely expose system resources without using ambient authority or raw Unix file descriptors.","label":"high"}
+{"prompt":"Find a counterexample to the conjecture that every planar graph with no cycles of length 4 is 3-colorable, or prove that no such counterexample exists.","label":"high"}
+{"prompt":"Provide a rigorous correctness argument for a lock-free queue using the hazard pointer memory reclamation technique. Prove that no thread can access a freed memory block or experience an ABA problem during concurrently interleaved enqueue/dequeue operations.","label":"high"}
+{"prompt":"Evaluate the security of an ECDH key exchange protocol over curve Secp256k1 when one of the public keys is not validated to lie on the curve. Explain the invalid curve attack in detail and how it extracts the private key.","label":"high"}
+{"prompt":"Derive the mathematical proof that the Transformer attention mechanism's complexity is quadratic with respect to sequence length, and discuss the exact mathematical formulation of linear attention approximations like Performers or Reformers.","label":"high"}
+{"prompt":"Draft a formal proof of linearizability for a lock-free concurrent skip list. Identify the linearization points for the insert, delete, and search operations under concurrent modification schedules.","label":"high"}
+{"prompt":"Design a distributed transactions engine using the two-phase commit (2PC) protocol over a lock-free transactional key-value store. Explain how you mitigate coordinator failures using a Paxos-backed consensus group for coordination state.","label":"high"}
+{"prompt":"Explain the mathematical theory behind Spectral Graph Theory. Specifically, prove how the Fiedler vector (the second smallest eigenvalue of the graph Laplacian) relates to the Cheeger constant and graph partitioning.","label":"high"}
+{"prompt":"Perform a deep root-cause analysis on this kernel panic log which indicates a page fault at address 0x0000000000000032 in the network socket layer. Trace the kernel pointer offset to find the exact dereference failure: ```\nBUG: unable to handle kernel NULL pointer dereference at 0000000000000032\nIP: [<ffffffff816d9b23>] tcp_v4_rcv+0x4c3/0x9e0\n```","label":"high"}
+{"prompt":"Solve the following optimization problem: Minimize $f(x) = \\frac{1}{2} x^T A x - b^T x$ subject to $C x = d$ using the method of Lagrange multipliers. Provide the explicit closed-form solution for $x$ assuming $A$ is symmetric positive-definite and $C$ has full row rank.","label":"high"}
+{"prompt":"Explain the mathematical formulation of the Girsanov theorem and its application to change of measure in risk-neutral pricing of financial derivatives.","label":"high"}
+{"prompt":"Analyze this concurrent Go code containing a subtle goroutine leak and data race under heavy workload, and prove how using channels or atomic values resolves the issue safely: ```go\ntype Hub struct { mu sync.Mutex; clients map[*Client]bool; broadcast chan []byte }\nfunc (h *Hub) Run() { for { select { case message := <-h.broadcast: for client := range h.clients { go func() { client.send <- message }() } } } }\n```","label":"high"}
+{"prompt":"Prove that the language $L = \\{ a^n b^m | n \\neq m \\}$ is not regular using the Pumping Lemma.","label":"high"}
+{"prompt":"Design a high-throughput financial matching engine with sub-microsecond latency. Explain the hardware-software co-design, including CPU pinning, cache line alignment, ring buffers, bypassing kernel network stacks (kernel bypass/solarflare), and avoiding GC pauses.","label":"high"}
+{"prompt":"Audit a smart contract written in Solidity for reentrancy, integer overflow, and flash loan governance attacks. The contract allows users to deposit collateral, borrow assets, and relies on an on-chain AMM for asset pricing.","label":"high"}
+{"prompt":"Derive the exact expression for the Cramer-Rao Lower Bound (CRLB) of an estimator under a multi-dimensional parameter space, and prove when an estimator is efficient.","label":"high"}
+{"prompt":"Explain the mathematical structure of the RSA cryptosystem. Prove that decryption works for all messages using Fermat's Little Theorem or Euler's Totient Theorem, and explain how the system is attacked if the prime factors are close to each other.","label":"high"}
+{"prompt":"Describe how you would implement garbage collection for a custom programming language compiler. Compare a generational copying collector with a tri-color mark-and-sweep collector in terms of latency, throughput, and memory fragmentation.","label":"high"}
+{"prompt":"Prove that the decision problem of finding whether a graph has a Hamiltonian path is NP-complete by showing a reduction from the 3-SAT problem.","label":"high"}
+{"prompt":"Design a resilient distributed tracing pipeline (similar to Jaeger or Zipkin) that can process 50 million spans per second. Explain sampling strategies (probabilistic, adaptive, tail-based), rate-limiting, and how to query traces across microservices under high network congestion.","label":"high"}
+{"prompt":"Prove the convergence of the gradient descent algorithm for a strongly convex and L-smooth objective function. Derive the optimal step size and the resulting convergence rate.","label":"high"}
+{"prompt":"Analyze the lock-free multi-producer multi-consumer (MPMC) ring buffer implementation in LMAX Disruptor. Explain the mathematical elegance of sequence tracking and memory barriers that prevents cache thrashing and lock contention.","label":"high"}
+{"prompt":"Audit this WebAuthn registration and authentication flow implementation. Identify vulnerability points where a malicious credential could bypass verification, and state the exact cryptographic signatures and replay protection invariants that must be verified on the server side.","label":"high"}
+{"prompt":"State and prove the Central Limit Theorem (CLT) using characteristic functions, explaining the assumptions of independent and identically distributed random variables with finite mean and variance.","label":"high"}
+{"prompt":"Design an end-to-end verifiable voting protocol using homomorphic encryption (e.g., Helios voting). Explain how zero-knowledge proofs are used to verify ballot validity without revealing individual votes, and how the mixnet or threshold decryption works.","label":"high"}
+{"prompt":"Optimize a database query execution engine. Design a vectorized query execution model (like in Snowflake or DuckDB) versus a volcano-style iterator model. Show how cache-locality, SIMD instructions, and memory layout (columnar vs row-based) impact processing speed.","label":"high"}
+{"prompt":"Solve the Dirichlet problem for the Laplace equation in a half-plane, and derive the Poisson kernel formula.","label":"high"}
+{"prompt":"Analyze a complex multi-process race condition in the Linux kernel virtual filesystem (VFS) layer during path resolution (`lookup_fast`). Point out the exact interaction between the directory entry cache (dcache) and read-copy update (RCU) pathwalk that triggers a soft lockup.","label":"high"}
+{"prompt":"Prove that the standard backpropagation algorithm with standard gradient descent is guaranteed to find a local minimum in a neural network under specific mathematical conditions, or explain why it can get stuck in saddle points.","label":"high"}
+{"prompt":"Design a secure, distributed multi-party computation (MPC) scheme for private set intersection (PSI) using oblivious transfer and secret sharing. Prove its security in the semi-honest adversary model.","label":"high"}
+{"prompt":"Derive the mathematical relationship between the continuous-time Fourier transform and the discrete-time Fourier transform, explaining aliasing and the Nyquist-Shannon sampling theorem.","label":"high"}
+{"prompt":"Formulate the Bellman-Ford-Moore algorithm for shortest paths. Prove that the algorithm correctly detects negative-weight cycles and halts, and analyze its worst-case complexity.","label":"high"}
+{"prompt":"Audit a custom TLS 1.3 handshake implementation. Identify the exact security risks of reusing ephemeral Diffie-Hellman keys across sessions, and state how to prevent key compromise impersonation attacks.","label":"high"}
+{"prompt":"Describe the system design for a globally distributed object storage system (like Amazon S3). Detail the erasure coding scheme (e.g., Reed-Solomon), data placement using consistent hashing, and metadata replication over a wide-area network.","label":"high"}
+{"prompt":"Prove that the greedy algorithm for the Matroid intersection problem produces an optimal solution, and define the conditions under which an optimization problem can be represented as a Matroid.","label":"high"}
+{"prompt":"Solve this systems challenge: Design an operating system scheduler that provides soft real-time guarantees alongside standard fair-share scheduling. Explain the priority inversion problem and how to solve it using priority inheritance or priority ceiling protocols.","label":"high"}
+{"prompt":"Derive the Kalman filter equations from the perspective of recursive Bayesian estimation for a linear state-space system with Gaussian noise.","label":"high"}
+{"prompt":"Audit a JWT-based authentication system that supports RSA signing keys. Analyze the vulnerability where a client sends a JWT with the 'alg' header set to 'none' or 'HS256' while the server expects 'RS256', and show how to fix it.","label":"high"}
+{"prompt":"Design a high-performance database storage engine utilizing Log-Structured Merge (LSM) trees. Explain write-ahead logging (WAL), memtable design, SSTable format, bloom filters, and compaction strategies (Leveled vs Size-Tiered) to minimize write and read amplification.","label":"high"}
+{"prompt":"Prove that the prime number theorem is equivalent to the statement that the Chebyshev function $\\psi(x) \\sim x$ as $x \\to \\infty$.","label":"high"}
+{"prompt":"Is P=NP?","label":"high"}
+{"prompt":"Prove Riemann Hypothesis.","label":"high"}
+{"prompt":"Solve: x^y = y^x, x != y.","label":"high"}
+{"prompt":"Show NP-completeness of 3-SAT.","label":"high"}
+{"prompt":"Derive: E=mc^2.","label":"high"}
+{"prompt":"Prove Euler's identity.","label":"high"}
+{"prompt":"Explain the ERP deadlock.","label":"high"}
+{"prompt":"Verify this zk-SNARK proof.","label":"high"}
+{"prompt":"Solve the Basel problem.","label":"high"}
+{"prompt":"Prove Banach-Tarski paradox.","label":"high"}
+{"prompt":"Is the Collatz conjecture true?","label":"high"}
+{"prompt":"Find the flaw in RSA-1024.","label":"high"}
+{"prompt":"Derive the Navier-Stokes eq.","label":"high"}
+{"prompt":"Audit this SHA3 design.","label":"high"}
+{"prompt":"Is every even number a sum of two primes?","label":"high"}
+{"prompt":"Prove the spectral theorem.","label":"high"}
+{"prompt":"Formulate quantum teleportation.","label":"high"}
+{"prompt":"Explain the ABA problem.","label":"high"}
+{"prompt":"Is 2^p - 1 always prime?","label":"high"}
+{"prompt":"Solve Schrödinger's equation.","label":"high"}
+{"prompt":"Prove Gödel's incompleteness.","label":"high"}
+{"prompt":"Derive the Bellman equation.","label":"high"}
+{"prompt":"Show that pi is transcendental.","label":"high"}
+{"prompt":"Is there a universal Turing machine?","label":"high"}
+{"prompt":"Explain the Byzantine fault.","label":"high"}
+{"prompt":"Solve: dy/dx = y^2 - x.","label":"high"}
+{"prompt":"Prove the prime number theorem.","label":"high"}
+{"prompt":"Find the Nash equilibrium.","label":"high"}
+{"prompt":"Verify the TLS 1.3 handshake.","label":"high"}
+{"prompt":"Is the Cantor set countable?","label":"high"}
+{"prompt":"Prove the Four Color Theorem.","label":"high"}
+{"prompt":"Derive black-hole entropy.","label":"high"}
+{"prompt":"Audit: AES-GCM tag validation.","label":"high"}
+{"prompt":"Formulate the PCA objective.","label":"high"}
+{"prompt":"Solve the heat kernel.","label":"high"}
+{"prompt":"Is the halting problem solvable?","label":"high"}
+{"prompt":"Prove Brouwer fixed-point.","label":"high"}
+{"prompt":"Derive the Dirac equation.","label":"high"}
+{"prompt":"Is prime factorization in P?","label":"high"}
+{"prompt":"Solve the wave equation.","label":"high"}
+{"prompt":"Prove Central Limit Theorem.","label":"high"}
+{"prompt":"Design a lock-free stack.","label":"high"}
+{"prompt":"Audit: ECDSA nonce reuse.","label":"high"}
+{"prompt":"Is 2^77232917 - 1 prime?","label":"high"}
+{"prompt":"Solve: f'(x) = f(x-1).","label":"high"}
+{"prompt":"Prove Cantor's theorem.","label":"high"}
+{"prompt":"Find the chromatic number of K_n.","label":"high"}
+{"prompt":"Derive the partition function.","label":"high"}
+{"prompt":"Show NP-completeness of Vertex Cover.","label":"high"}
+{"prompt":"Verify: ECDH key derivation.","label":"high"}
+{"prompt":"Explain MVC architecture.","label":"medium"}
+{"prompt":"Write a Python TCP server.","label":"medium"}
+{"prompt":"Compare SQL vs NoSQL database.","label":"medium"}
+{"prompt":"Implement quicksort in Go.","label":"medium"}
+{"prompt":"What is an abstract factory pattern?","label":"medium"}
+{"prompt":"How do you handle JWT in React?","label":"medium"}
+{"prompt":"Write a script to backup a database.","label":"medium"}
+{"prompt":"Explain semantic HTML.","label":"medium"}
+{"prompt":"Implement a queue using stacks.","label":"medium"}
+{"prompt":"Create a basic HTTP API in Node.","label":"medium"}
+{"prompt":"Explain CSS box model.","label":"medium"}
+{"prompt":"Write unit tests for a router.","label":"medium"}
+{"prompt":"Compare Docker and Kubernetes.","label":"medium"}
+{"prompt":"What is a SQL injection vulnerability?","label":"medium"}
+{"prompt":"Implement a binary search in C++.","label":"medium"}
+{"prompt":"Explain RESTful API routing.","label":"medium"}
+{"prompt":"Write a script to clean logs.","label":"medium"}
+{"prompt":"Explain the purpose of git rebase.","label":"medium"}
+{"prompt":"Implement a priority queue in Python.","label":"medium"}
+{"prompt":"Create a simple Express middleware.","label":"medium"}
+{"prompt":"What is cross-site scripting (XSS)?","label":"medium"}
+{"prompt":"Write a Dockerfile for Python app.","label":"medium"}
+{"prompt":"Explain debounce vs throttle.","label":"medium"}
+{"prompt":"Design a user-permissions database schema.","label":"medium"}
+{"prompt":"How does OAuth 2.0 work?","label":"medium"}
+{"prompt":"Write a React hook for fetching data.","label":"medium"}
+{"prompt":"Implement bubble sort in JavaScript.","label":"medium"}
+{"prompt":"Explain CORS headers in HTTP.","label":"medium"}
+{"prompt":"Write a SQL query for pageviews.","label":"medium"}
+{"prompt":"What are Git hooks used for?","label":"medium"}
+{"prompt":"Implement a circular queue.","label":"medium"}
+{"prompt":"Explain DNS lookup steps.","label":"medium"}
+{"prompt":"Write a script to parse XML.","label":"medium"}
+{"prompt":"Compare TCP and UDP protocols.","label":"medium"}
+{"prompt":"What is the virtual DOM?","label":"medium"}
+{"prompt":"Implement a simple hash map.","label":"medium"}
+{"prompt":"Explain lazy loading of images.","label":"medium"}
+{"prompt":"Write a script to send SMTP mail.","label":"medium"}
+{"prompt":"Compare localstorage and cookies.","label":"medium"}
+{"prompt":"Explain CSS Flexbox layout.","label":"medium"}
+{"prompt":"What day is today?","label":"low"}
+{"prompt":"Translate 'water' to German.","label":"low"}
+{"prompt":"Is 15 a prime?","label":"low"}
+{"prompt":"List three capital cities.","label":"low"}
+{"prompt":"Spell the word 'necessary'.","label":"low"}
+{"prompt":"What is 4 times 5?","label":"low"}
+{"prompt":"Is an apple a fruit?","label":"low"}
+{"prompt":"Capital of Spain?","label":"low"}
+{"prompt":"Convert 'cat' to uppercase.","label":"low"}
+{"prompt":"What is 10 plus 12?","label":"low"}
+{"prompt":"Is a whale a fish?","label":"low"}
+{"prompt":"Capital of Italy?","label":"low"}
+{"prompt":"List five warm colors.","label":"low"}
+{"prompt":"Is 7 even or odd?","label":"low"}
+{"prompt":"Count the letters in 'hello'.","label":"low"}
+{"prompt":"Translate 'goodnight' to Spanish.","label":"low"}
+{"prompt":"Is a car a living thing?","label":"low"}
+{"prompt":"What is 100 divided by 5?","label":"low"}
+{"prompt":"Say hello in German.","label":"low"}
+{"prompt":"List the planets in our solar system.","label":"low"}
+{"prompt":"Is 8 greater than 3?","label":"low"}
+{"prompt":"What is the opposite of up?","label":"low"}
+{"prompt":"Correct spelling: 'recieve'.","label":"low"}
+{"prompt":"What is 50 minus 15?","label":"low"}
+{"prompt":"Is a dog a mammal?","label":"low"}
+{"prompt":"What is the capital of Japan?","label":"low"}
+{"prompt":"Convert 'DOG' to lowercase.","label":"low"}
+{"prompt":"Is 11 an even number?","label":"low"}
+{"prompt":"What is 3 times 9?","label":"low"}
+{"prompt":"Translate 'thank you' to French.","label":"low"}
+{"prompt":"Is water wet?","label":"low"}
+{"prompt":"What is the capital of Canada?","label":"low"}
+{"prompt":"Is a square a circle?","label":"low"}
+{"prompt":"What is 20 plus 30?","label":"low"}
+{"prompt":"List three European countries.","label":"low"}
+{"prompt":"Spell the word 'beautiful'.","label":"low"}
+{"prompt":"Convert 1 hour to minutes.","label":"low"}
+{"prompt":"What is the opposite of happy?","label":"low"}
+{"prompt":"Is 9 a perfect square?","label":"low"}
+{"prompt":"Translate 'goodbye' to Spanish.","label":"low"}
