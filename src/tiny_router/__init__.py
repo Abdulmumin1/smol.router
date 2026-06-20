@@ -11,15 +11,18 @@ from .errors import (
     ProviderError,
     RouterError,
 )
+from .config import ModelTarget, RouterConfig
 
 __all__ = [
     "ArtifactError",
     "ConfigurationError",
     "DatasetError",
     "ExhaustedError",
+    "ModelTarget",
     "ProviderError",
     "RouteDecision",
     "RouterError",
+    "RouterConfig",
     "RouterModel",
     "RoutingPolicy",
     "Tier",
