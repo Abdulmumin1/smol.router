@@ -116,6 +116,11 @@ class ModelTests(unittest.TestCase):
         metrics = evaluate(self.model, self.examples, RoutingPolicy(underroute_penalty=100))
         self.assertEqual(sum(map(sum, metrics.confusion_matrix)), len(self.examples))
         self.assertGreaterEqual(metrics.accuracy, 0.5)
+        self.assertGreaterEqual(metrics.classifier_accuracy, 0.5)
+        self.assertAlmostEqual(metrics.underroute_rate + metrics.overroute_rate + metrics.accuracy, 1.0)
+        self.assertTrue(math.isfinite(metrics.log_loss))
+        self.assertGreaterEqual(metrics.brier_score, 0)
+        self.assertEqual(len(metrics.per_tier_recall), 3)
 
 
 class PolicyTests(unittest.TestCase):
