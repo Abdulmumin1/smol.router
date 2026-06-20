@@ -1,0 +1,46 @@
+{"prompt":"Say hello in a friendly tone.","label":"low"}
+{"prompt":"Rewrite this sentence to be shorter: We are currently in the process of reviewing it.","label":"low"}
+{"prompt":"Extract the email address from: Contact Ada at ada@example.com today.","label":"low"}
+{"prompt":"Classify this review as positive or negative: I loved the service.","label":"low"}
+{"prompt":"Translate 'good morning' into French.","label":"low"}
+{"prompt":"Return the following names as a JSON array: Ada, Linus, Grace.","label":"low"}
+{"prompt":"Correct the spelling in: accomodate the recieve request.","label":"low"}
+{"prompt":"Summarize in one sentence: The meeting moved from Monday to Tuesday because the office is closed.","label":"low"}
+{"prompt":"What is 12 plus 19?","label":"low"}
+{"prompt":"Convert this title to lowercase: A SMALL EXAMPLE.","label":"low"}
+{"prompt":"Detect the language of this text: Buenos dias, amigo.","label":"low"}
+{"prompt":"List three primary colors.","label":"low"}
+{"prompt":"Write a polite acknowledgment of a received email.","label":"low"}
+{"prompt":"Remove duplicate words from: red blue red green.","label":"low"}
+{"prompt":"Is the number 14 even or odd?","label":"low"}
+{"prompt":"Write a Python function that validates an email address and explain its limitations.","label":"medium"}
+{"prompt":"Summarize this five-page product proposal for an executive audience.","label":"medium"}
+{"prompt":"Compare REST and GraphQL for a small mobile application.","label":"medium"}
+{"prompt":"Debug this JavaScript function that sometimes returns undefined. ```js\nfunction find(xs, id) { xs.forEach(x => { if (x.id === id) return x }) }\n```","label":"medium"}
+{"prompt":"Design a normalized SQL schema for customers, orders, products, and refunds.","label":"medium"}
+{"prompt":"Explain closures in JavaScript with a practical example.","label":"medium"}
+{"prompt":"Create a seven-day study schedule for an introductory calculus exam.","label":"medium"}
+{"prompt":"Refactor this class to separate persistence from domain logic.","label":"medium"}
+{"prompt":"Write unit tests for a function that parses ISO dates and handles invalid input.","label":"medium"}
+{"prompt":"Analyze the tone and argument of this short opinion essay.","label":"medium"}
+{"prompt":"Implement binary search and explain its time complexity.","label":"medium"}
+{"prompt":"Create a migration plan from a monolith to two services with minimal downtime.","label":"medium"}
+{"prompt":"Review this API design for pagination and filtering tradeoffs.","label":"medium"}
+{"prompt":"Calculate the monthly payment on a fixed-rate loan and show the formula.","label":"medium"}
+{"prompt":"Draft an incident postmortem from this timeline without assigning blame.","label":"medium"}
+{"prompt":"Prove that every finite integral domain is a field.","label":"high"}
+{"prompt":"Find the race condition in this lock-free queue implementation and give a correctness argument.","label":"high"}
+{"prompt":"Design a multi-region consensus architecture under network partitions and compare its failure modes.","label":"high"}
+{"prompt":"Solve this functional equation over the reals and prove uniqueness: f(x+y)=f(x)f(y).","label":"high"}
+{"prompt":"Audit this cryptographic protocol for replay, downgrade, and key-compromise attacks.","label":"high"}
+{"prompt":"Derive backpropagation for a transformer attention layer from first principles.","label":"high"}
+{"prompt":"Diagnose a nondeterministic distributed transaction bug from these conflicting traces.","label":"high"}
+{"prompt":"Construct a formal proof that this concurrent state machine is linearizable.","label":"high"}
+{"prompt":"Optimize this compiler intermediate representation pass while preserving aliasing semantics.","label":"high"}
+{"prompt":"Evaluate three database isolation strategies for this adversarial transaction schedule.","label":"high"}
+{"prompt":"Derive the asymptotic bound for this unusual recurrence and justify every step.","label":"high"}
+{"prompt":"Find a counterexample to this proposed theorem, or prove it if none exists.","label":"high"}
+{"prompt":"Perform root-cause analysis across these kernel, network, and application traces.","label":"high"}
+{"prompt":"Design a safe capability system for untrusted plugins and state the security invariants.","label":"high"}
+{"prompt":"Prove or disprove that this randomized algorithm meets its claimed probability bound.","label":"high"}
+
