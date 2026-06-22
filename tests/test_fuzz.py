@@ -6,12 +6,12 @@ import string
 import unittest
 import json
 
-from tiny_router.features import extract_features
-from tiny_router.model import RouterModel
-from tiny_router.policy import RoutingPolicy
-from tiny_router.types import Tier
-from tiny_router.config import RouterConfig
-from tiny_router.errors import ArtifactError, ConfigurationError
+from smol_router.features import extract_features
+from smol_router.model import RouterModel
+from smol_router.policy import RoutingPolicy
+from smol_router.types import Tier
+from smol_router.config import RouterConfig
+from smol_router.errors import ArtifactError, ConfigurationError
 
 
 def random_text(rng: random.Random) -> str:

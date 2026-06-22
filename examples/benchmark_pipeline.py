@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from tiny_router import BenchmarkTask, RouterConfig, run_benchmark, write_benchmark_jsonl
+from smol_router import BenchmarkTask, RouterConfig, run_benchmark, write_benchmark_jsonl
 
 
 config = RouterConfig.load(Path(__file__).parents[1] / "router.example.json")

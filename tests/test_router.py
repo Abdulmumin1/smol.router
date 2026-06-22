@@ -6,11 +6,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tiny_router.data import Example, label_from_scores, load_jsonl, split_examples
-from tiny_router.evaluate import evaluate
-from tiny_router.model import RouterModel
-from tiny_router.policy import RoutingPolicy
-from tiny_router.types import Tier
+from smol_router.data import Example, label_from_scores, load_jsonl, split_examples
+from smol_router.evaluate import evaluate
+from smol_router.model import RouterModel
+from smol_router.policy import RoutingPolicy
+from smol_router.types import Tier
 
 
 class DataTests(unittest.TestCase):

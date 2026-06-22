@@ -10,7 +10,7 @@ import Docs from "../layouts/Docs.astro";
   <div class="callout"><p>The included seed dataset is a smoke test. Its current nine-row holdout is intentionally reported honestly and is not suitable for production.</p></div>
 
   <h2>Benchmark every tier</h2>
-  <div class="code-window"><div class="code-bar"><i></i><i></i><i></i>benchmark.py</div><pre><code><span class="token-key">from</span> tiny_router <span class="token-key">import</span> (
+  <div class="code-window"><div class="code-bar"><i></i><i></i><i></i>benchmark.py</div><pre><code><span class="token-key">from</span> smol_router <span class="token-key">import</span> (
   BenchmarkTask, RouterConfig,
   run_benchmark, write_benchmark_jsonl,
 )
@@ -33,11 +33,11 @@ write_benchmark_jsonl(records, <span class="token-string">"data/benchmark.jsonl"
   <ul><li>A normalized 0–1 score for low, medium, and high.</li><li>Per-tier latency and provider failure details.</li><li>Task group and weight for leakage-safe splitting.</li><li>The original prompt, ready for the training loader.</li></ul>
 
   <h2>Train and calibrate</h2>
-  <div class="code-window"><div class="code-bar"><i></i><i></i><i></i>terminal</div><pre><code>tiny-router train data/benchmark.jsonl \
-  --acceptable-score 0.8 \
-  --output model.json
+  <div class="code-window"><div class="code-bar"><i></i><i></i><i></i>terminal</div><pre><code>smol-router train data/benchmark.jsonl \
+    --acceptable-score 0.8 \
+    --output model.json
 
-tiny-router evaluate data/locked-test.jsonl --model model.json</code></pre></div>
+  smol-router evaluate data/locked-test.jsonl --model model.json</code></pre></div>
   <p>Training uses weighted softmax regression over deterministic hashed features, then fits scalar temperature on held-out examples. Related task groups never cross the automatic split.</p>
 
   <h2>Read the right metrics</h2>

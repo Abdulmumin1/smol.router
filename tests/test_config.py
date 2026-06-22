@@ -3,9 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tiny_router.config import RouterConfig
-from tiny_router.errors import ConfigurationError
-from tiny_router.types import Tier
+from smol_router.config import RouterConfig
+from smol_router.errors import ConfigurationError
+from smol_router.types import Tier
 
 
 VALID = {

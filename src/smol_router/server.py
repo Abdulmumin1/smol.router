@@ -15,7 +15,7 @@ MAX_BATCH_SIZE = 1_000
 
 def create_server(router: Router, host: str = "127.0.0.1", port: int = 8080) -> ThreadingHTTPServer:
     class Handler(BaseHTTPRequestHandler):
-        server_version = "tiny-router"
+        server_version = "smol-router"
         sys_version = ""
 
         def do_GET(self) -> None:  # noqa: N802

@@ -1,4 +1,4 @@
-# Tiny Capability Router
+# Smol Capability Router
 
 A dependency-free Python classifier and SDK that routes a prompt to the cheapest model tier likely to answer it correctly.
 
@@ -23,8 +23,8 @@ Runtime dependencies: none. Python 3.10+.
 ```bash
 make test
 make train
-PYTHONPATH=src python3 -m tiny_router init
-PYTHONPATH=src python3 -m tiny_router route \
+PYTHONPATH=src python3 -m smol_router init
+PYTHONPATH=src python3 -m smol_router route \
   --model model.json --config router.json \
   "Find the race condition and justify the fix"
 ```
@@ -35,7 +35,7 @@ Or install the CLI and SDK:
 python3 -m venv .venv
 . .venv/bin/activate
 python3 -m pip install -e .
-tiny-router --version
+smol-router --version
 ```
 
 ## Python SDK
@@ -64,7 +64,7 @@ Configure which provider/model serves each tier:
 Route without invoking a provider:
 
 ```python
-from tiny_router import Router
+from smol_router import Router
 
 router = Router.from_files("model.json", "router.json")
 result = router.route("Prove this concurrent queue is linearizable")
@@ -83,7 +83,7 @@ result = router.route(prompt, minimum_tier="medium", maximum_tier="high")
 The SDK stays provider-agnostic. Pass your own model client and optional response validator:
 
 ```python
-from tiny_router import ModelTarget, ProviderError
+from smol_router import ModelTarget, ProviderError
 
 def invoke(target: ModelTarget, prompt: str) -> str:
     try:
@@ -107,7 +107,7 @@ Rejected answers and retryable provider failures move up one tier. Non-retryable
 Do not label difficulty by intuition. Run every representative prompt through all three model tiers, judge each answer, and choose the cheapest tier meeting the acceptance threshold.
 
 ```python
-from tiny_router import BenchmarkTask, RouterConfig, run_benchmark, write_benchmark_jsonl
+from smol_router import BenchmarkTask, RouterConfig, run_benchmark, write_benchmark_jsonl
 
 config = RouterConfig.load("router.json")
 tasks = [BenchmarkTask(prompt, reference=expected, group=task_family)]
@@ -124,8 +124,8 @@ write_benchmark_jsonl(records, "data/benchmark.jsonl")
 `run_benchmark_async` supports async providers and judges. Provider failures are recorded as score `0` with latency and error text. The resulting JSONL feeds directly into training:
 
 ```bash
-tiny-router train data/benchmark.jsonl --output model.json --acceptable-score 0.8
-tiny-router evaluate data/held-out.jsonl --model model.json
+smol-router train data/benchmark.jsonl --output model.json --acceptable-score 0.8
+smol-router evaluate data/held-out.jsonl --model model.json
 ```
 
 Use `group` for paraphrases or variants of the same underlying task. Grouped examples are kept on one side of the train/validation split to prevent leakage.
@@ -154,7 +154,7 @@ Training fits temperature on held-out examples so probabilities are useful to th
 ## HTTP API
 
 ```bash
-tiny-router serve --model model.json --config router.json --port 8080
+smol-router serve --model model.json --config router.json --port 8080
 ```
 
 Endpoints:
@@ -169,12 +169,12 @@ The server accepts JSON bodies up to 1 MB, validates prompts up to 200,000 chara
 ## CLI
 
 ```bash
-tiny-router init [--output router.json] [--force]
-tiny-router train DATASET [--output model.json] [--no-calibrate]
-tiny-router evaluate DATASET --model model.json
-tiny-router route --model model.json [--config router.json] [PROMPT]
-tiny-router inspect --model model.json
-tiny-router serve --model model.json [--config router.json]
+smol-router init [--output router.json] [--force]
+smol-router train DATASET [--output model.json] [--no-calibrate]
+smol-router evaluate DATASET --model model.json
+smol-router route --model model.json [--config router.json] [PROMPT]
+smol-router inspect --model model.json
+smol-router serve --model model.json [--config router.json]
 ```
 
 Omit `PROMPT` to read stdin. Model artifacts are checksum-protected, bounded to 64 MB when read, and written atomically.

@@ -5,8 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tiny_router.cli import main
-from tiny_router.model import RouterModel
+from smol_router.cli import main
+from smol_router.model import RouterModel
 
 
 class CliTests(unittest.TestCase):

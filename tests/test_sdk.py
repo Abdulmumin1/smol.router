@@ -1,6 +1,6 @@
 import unittest
 
-from tiny_router import ExhaustedError, InvalidPromptError, ProviderError, Router, RouterConfig, RouterModel, Tier
+from smol_router import ExhaustedError, InvalidPromptError, ProviderError, Router, RouterConfig, RouterModel, Tier
 
 
 def make_router() -> Router:

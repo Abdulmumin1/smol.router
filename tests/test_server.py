@@ -4,8 +4,8 @@ import unittest
 import urllib.error
 import urllib.request
 
-from tiny_router import Router, RouterConfig, RouterModel
-from tiny_router.server import create_server
+from smol_router import Router, RouterConfig, RouterModel
+from smol_router.server import create_server
 
 
 class ServerTests(unittest.TestCase):

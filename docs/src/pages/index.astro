@@ -3,11 +3,11 @@ import Docs from "../layouts/Docs.astro";
 ---
 
 <Docs title="Introduction" description="Capability routing for language models.">
-  <p class="eyebrow">tiny.router</p>
+  <p class="eyebrow">smol.router</p>
   <h1>Introduction.</h1>
-  <p class="lead"><strong>tiny.router</strong> is a small, calibrated classifier that sends each prompt to the cheapest model likely to answer it correctly, then escalates when reality disagrees.</p>
-
-  <p>Rather than using large language models to route traffic—which defeats the purpose of cost-saving—tiny.router uses a lightweight linear classifier trained directly on your benchmarked data. It runs locally without heavy dependencies, adding less than a millisecond of overhead.</p>
+  <p class="lead"><strong>smol.router</strong> is a small, calibrated classifier that sends each prompt to the cheapest model likely to answer it correctly, then escalates when reality disagrees.</p>
+  
+  <p>Rather than using large language models to route traffic—which defeats the purpose of cost-saving—smol.router uses a lightweight linear classifier trained directly on your benchmarked data. It runs locally without heavy dependencies, adding less than a millisecond of overhead.</p>
 
   <h2>Core Principles</h2>
   <ul>
@@ -18,7 +18,7 @@ import Docs from "../layouts/Docs.astro";
 
   <h2>Why this approach?</h2>
   <p>Intelligence is expensive. You should use exactly enough for each request. Hand-written prompt lengths or regex matching are fragile, while LLM-based routing is slow and costly.</p>
-  <p>By benchmark-testing your actual models to see which tier passes your evaluators, tiny.router learns the underlying distribution of your prompt capability requirements.</p>
+  <p>By benchmark-testing your actual models to see which tier passes your evaluators, smol.router learns the underlying distribution of your prompt capability requirements.</p>
 
   <h2>Overview</h2>
   <div class="feature-grid">

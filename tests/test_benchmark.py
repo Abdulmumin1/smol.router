@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tiny_router import (
+from smol_router import (
     BenchmarkTask,
     ProviderError,
     RouterConfig,
@@ -11,7 +11,7 @@ from tiny_router import (
     run_benchmark_async,
     write_benchmark_jsonl,
 )
-from tiny_router.data import load_jsonl
+from smol_router.data import load_jsonl
 
 
 def config():

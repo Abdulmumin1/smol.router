@@ -34,7 +34,7 @@ def _add_policy_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="tiny-router", description="Train and run a tiny capability router")
+    parser = argparse.ArgumentParser(prog="smol-router", description="Train and run a smol capability router")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 

@@ -1,6 +1,6 @@
 import unittest
 
-from tiny_router.errors import ProviderError, RouterError
+from smol_router.errors import ProviderError, RouterError
 
 
 class ErrorTests(unittest.TestCase):

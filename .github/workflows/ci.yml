@@ -27,7 +27,7 @@ jobs:
       - name: Run tests and fuzz properties
         run: python -m pytest -q
       - name: Smoke test installed CLI
-        run: tiny-router --version && tiny-router init --output /tmp/router.json
+        run: smol-router --version && smol-router init --output /tmp/router.json
       - name: Check whitespace errors
         run: git diff --check
 
