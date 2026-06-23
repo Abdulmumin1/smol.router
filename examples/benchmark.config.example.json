@@ -1,0 +1,14 @@
+{
+  "router_config": "../router.example.json",
+  "prompts": "benchmark_prompts.example.jsonl",
+  "output": "../data/benchmark.jsonl",
+  "provider": {
+    "base_url": "https://api.openai.com/v1",
+    "api_key_env": "OPENAI_API_KEY",
+    "timeout_seconds": 60
+  },
+  "judge": {
+    "model": "gpt-4.1-mini"
+  },
+  "system_prompt": "Answer the user request accurately and concisely."
+}

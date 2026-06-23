@@ -6,19 +6,11 @@ A dependency-free Python classifier and SDK that routes a prompt to the cheapest
 
 ```text
 prompt -> calibrated classifier -> cost/risk policy -> model target
-                                             |
-                                             +-> validate response -> escalate
 ```
 
-The classifier estimates the **minimum capable tier** (`low`, `medium`, `high`). The policy separately minimizes model cost plus expected under-routing damage. Keeping those concerns separate lets you change prices and risk tolerance without retraining.
+The router predicts the minimum capable tier: `low`, `medium`, or `high`. It does not call model providers by itself; your app keeps control of credentials, retries, budgets, and observability.
 
-## Status
-
-This repository contains a complete training, routing, benchmarking, SDK, and HTTP pipeline. The included seed dataset is a smoke-test fixture, not a production benchmark. Real quality depends on representative prompts scored against your actual models.
-
-Runtime dependencies: none. Python 3.10+.
-
-## Quick start
+## Quick Start
 
 ```bash
 make test
@@ -29,7 +21,7 @@ PYTHONPATH=src python3 -m smol_router route \
   "Find the race condition and justify the fix"
 ```
 
-Or install the CLI and SDK:
+Install the CLI:
 
 ```bash
 python3 -m venv .venv
@@ -38,30 +30,28 @@ python3 -m pip install -e .
 smol-router --version
 ```
 
-## Python SDK
+## Build Training Data
 
-Configure which provider/model serves each tier:
+Do not label prompt difficulty by intuition. Benchmark your actual tiers, score each answer, and train from the cheapest tier that passes.
 
-```json
-{
-  "models": {
-    "low": {"provider": "your-client", "model": "small-model"},
-    "medium": {"provider": "your-client", "model": "standard-model"},
-    "high": {"provider": "your-client", "model": "frontier-model"}
-  },
-  "policy": {
-    "tier_costs": [1, 5, 20],
-    "underroute_penalty": 30,
-    "confidence_threshold": 0.45,
-    "uncertain_tier": "medium",
-    "minimum_tier": "low",
-    "maximum_tier": "high",
-    "high_probability_threshold": 0.7
-  }
-}
+```bash
+cp router.example.json router.json
+cp examples/benchmark.config.example.json benchmark.config.json
+cp examples/benchmark_prompts.example.jsonl benchmark_prompts.jsonl
 ```
 
-Route without invoking a provider:
+Edit `router.json` with your `low`, `medium`, and `high` model IDs. Add prompts and rubrics to `benchmark_prompts.jsonl`, then run the OpenAI-compatible benchmark runner:
+
+```bash
+OPENAI_API_KEY=... PYTHONPATH=src python3 examples/benchmark_pipeline.py \
+  --config benchmark.config.json
+
+smol-router train data/benchmark.jsonl --output model.json --acceptable-score 0.8
+```
+
+See [Training](https://router.ai-query.dev/training/) for prompt JSONL format, judge config, and evaluation guidance.
+
+## Python SDK
 
 ```python
 from smol_router import Router
@@ -72,129 +62,30 @@ result = router.route("Prove this concurrent queue is linearizable")
 print(result.tier.label, result.model, result.decision.confidence)
 ```
 
-Per-request safety bounds are explicit:
+To invoke a provider and optionally escalate failed responses:
 
 ```python
-result = router.route(prompt, minimum_tier="medium", maximum_tier="high")
-```
-
-### Invoke and escalate
-
-The SDK stays provider-agnostic. Pass your own model client and optional response validator:
-
-```python
-from smol_router import ModelTarget, ProviderError
-
-def invoke(target: ModelTarget, prompt: str) -> str:
-    try:
-        return my_client.generate(model=target.model, prompt=prompt)
-    except TimeoutError as exc:
-        raise ProviderError(str(exc), retryable=True) from exc
-
 result = router.execute(
     prompt,
-    invoke,
+    invoke=lambda target, prompt: client.generate(model=target.model, prompt=prompt),
     validate=lambda answer: answer_passes_task_checks(answer),
 )
-
-print(result.output, result.route.model, result.escalated)
 ```
-
-Rejected answers and retryable provider failures move up one tier. Non-retryable failures remain visible. `execute_async` provides the same behavior for async clients and accepts sync or async validators.
-
-## Build a real dataset
-
-Do not label difficulty by intuition. Run every representative prompt through all three model tiers, judge each answer, and choose the cheapest tier meeting the acceptance threshold.
-
-```python
-from smol_router import BenchmarkTask, RouterConfig, run_benchmark, write_benchmark_jsonl
-
-config = RouterConfig.load("router.json")
-tasks = [BenchmarkTask(prompt, reference=expected, group=task_family)]
-
-records = run_benchmark(
-    tasks,
-    config,
-    invoke=lambda target, prompt: client.generate(target.model, prompt),
-    judge=lambda task, answer: score_answer(task.reference, answer),  # 0..1
-)
-write_benchmark_jsonl(records, "data/benchmark.jsonl")
-```
-
-`run_benchmark_async` supports async providers and judges. Provider failures are recorded as score `0` with latency and error text. The resulting JSONL feeds directly into training:
-
-```bash
-smol-router train data/benchmark.jsonl --output model.json --acceptable-score 0.8
-smol-router evaluate data/held-out.jsonl --model model.json
-```
-
-Use `group` for paraphrases or variants of the same underlying task. Grouped examples are kept on one side of the train/validation split to prevent leakage.
-
-Direct labels are also accepted:
-
-```json
-{"prompt":"Translate hello to French","label":"low","group":"translation-1","weight":1.0}
-```
-
-Score records require all tiers. If no tier reaches the acceptable score, loading fails instead of falsely labeling the prompt `high`.
-
-## Evaluation
-
-Reports include:
-
-- classifier accuracy and policy exact-tier accuracy;
-- under-route and over-route rates;
-- mean capability shortfall;
-- selected cost, realized cost, and regret against the cheapest sufficient tier;
-- savings versus always selecting high;
-- log loss, Brier score, per-tier recall, and confusion matrix.
-
-Training fits temperature on held-out examples so probabilities are useful to the cost policy. For production, keep a separate locked test set; the automatic validation split is for iteration, not final claims.
-
-## HTTP API
-
-```bash
-smol-router serve --model model.json --config router.json --port 8080
-```
-
-Endpoints:
-
-- `GET /health`
-- `GET /models`
-- `POST /route` with `{"prompt":"...","minimum_tier":"low","maximum_tier":"high"}`
-- `POST /route/batch` with `{"prompts":["...","..."]}` (maximum 1,000)
-
-The server accepts JSON bodies up to 1 MB, validates prompts up to 200,000 characters, and returns stable JSON error objects. It only selects models; provider invocation stays in your application where credentials, retries, budgets, and observability belong.
 
 ## CLI
 
 ```bash
-smol-router init [--output router.json] [--force]
-smol-router train DATASET [--output model.json] [--no-calibrate]
+smol-router init [--output router.json]
+smol-router train DATASET [--output model.json]
 smol-router evaluate DATASET --model model.json
 smol-router route --model model.json [--config router.json] [PROMPT]
-smol-router inspect --model model.json
 smol-router serve --model model.json [--config router.json]
 ```
 
-Omit `PROMPT` to read stdin. Model artifacts are checksum-protected, bounded to 64 MB when read, and written atomically.
+## Development
 
-## Fuzzing and tests
+Runtime dependencies: none. Python 3.10+.
 
 ```bash
-make test
-python3 -m pip install -e '.[test]'
-python3 -m pytest
+PYTHONPATH=src python3 -m unittest discover -s tests
 ```
-
-The standard-library suite fuzzes arbitrary Unicode/control-character prompts, thousands of probability distributions, malformed model/config JSON, and policy type boundaries. Installing the test extra adds 500 Hypothesis-generated Unicode cases.
-
-## Production checklist
-
-1. Collect prompts from the workload you will actually route.
-2. Use task-specific tests or carefully validated human/judge scoring.
-3. Group related prompt variants before splitting.
-4. Lock an untouched test set and define a maximum under-route rate.
-5. Tune policy costs from measured price, latency, and failure impact.
-6. Log selected tier, confidence, escalation, outcome, latency, and cost.
-7. Re-benchmark when any underlying model changes.
